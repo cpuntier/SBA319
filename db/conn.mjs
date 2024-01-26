@@ -15,6 +15,6 @@ try{
     console.log(err);
 }
 
-let db = conn.db("sample_mflix");
+let db = conn.db("SBA-319");
 
 export default db;

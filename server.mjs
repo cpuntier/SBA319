@@ -3,6 +3,8 @@ import "dotenv/config"
 import db from "./db/conn.mjs"
 const PORT = process.env.PORT || 3000;
 
+import router from "./routes/characters.mjs";
+
 const app = express();
 
 app.use(express.json());
@@ -12,10 +14,13 @@ app.use(express.json());
 //     console.log("movies awaited")
 // })
 
+app.use("/characters", router);
+
 app.get("/",async (req,res) => {
-    let collection = await db.collection('movies');
-    let moviesTest = await collection.find({runtime:11}).toArray();
-    console.log("hello1")
+    let collection = await db.collection('characters');
+//    console.log(collection);
+    let moviesTest = await collection.find().toArray();
+    console.log(moviesTest);
     res.send(moviesTest)
 })
 
