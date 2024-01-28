@@ -34,9 +34,25 @@ router.route('/')
 router.route('/:name') //matches name of character gives you information on that character. Names are case sensitive
     .get( async (req,res,next) => {
         let collection = await db.collection('characters');
-        let characters = await collection.find({name:req.params.name}).toArray();
-        console.log(characters);
-        res.send(characters);
+        let character = await collection.find({name:req.params.name}).toArray();
+        console.log(character);
+        res.send(character);
+    }).patch(async (req,res,next) => {
+        let collection = await db.collection('characters');
+        try{
+            const update = await collection.updateOne({name:req.params.name},{$set:req.body})
+            res.send(update);
+        }catch(error){
+            res.send("Error updating");
+        }
+    }).delete(async(req,res,next) => {
+        let collection = await db.collection('characters');
+        try{
+            const deletion = await collection.deleteOne({name: req.params.name});
+            res.send(deletion);
+        }catch(error){
+            res.send("Error deleting");
+        }
     })
 
 
